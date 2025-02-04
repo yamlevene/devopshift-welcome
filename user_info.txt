@@ -1,0 +1,3 @@
+GITBRANCH=workshop/terraform
+GITURL=github.com/yamlevene/devopshift-welcome
+GITUSERNAME=yamlevene
