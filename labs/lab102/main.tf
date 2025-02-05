@@ -23,31 +23,23 @@ resource "aws_security_group" "sg" {
 }
 
 resource "aws_instance" "vm" {
-  ami           = "ami-0ff8a91507f77f867"
+  ami           = "ami-0c02fb55956c7d316"
   instance_type = "t2.micro"
 
   vpc_security_group_ids = [aws_security_group.sg.id]
 
   tags = {
-    Name = "[YAM-LEVENE]-vm"
+    Name = "YAM-vm"
   }
-}
-
-terraform {
-  required_providers {
-    time = {
-      source  = "hashicorp/time"
-      version = "0.7.2"  # Make sure to use the version that match latest version
-    }
-  }
-}
-
-resource "time_sleep" "wait_for_ip" {
-  create_duration = "10s"  # Wait for 10 seconds
 }
 
 output "vm_public_ip" {
   value       = aws_instance.vm.public_ip
-  depends_on  = [time_sleep.wait_for_ip]  # Wait for the time_sleep resource to complete
   description = "Public IP address of the VM"
+}
+
+resource "null_resource" "run_script" {
+  provisioner "local-exec" {
+    command = "echo 'Running a script after provisioning.'"
+  }
 }
