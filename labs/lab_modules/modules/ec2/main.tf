@@ -7,22 +7,20 @@ variable "region" {
  default = "us-east-1"
 }
 
-output "print_region" {
-  value = var.region
-}
-
 
 # Mocked IP var
 variable "emptyip" {
    default = ""
 }
 
-variable "ingress_port" {
-  
-}
-
-variable "ingress_protocol" {
-  
+variable "ingress_rules" {
+  description = "List of ingress rules"
+  type = list(object({
+    from_port   = number
+    to_port     = number
+    protocol    = string
+    cidr_blocks = list(string)
+  }))
 }
 
 variable "outgress_port" {
@@ -38,12 +36,15 @@ variable "cidr_blocks" {
 }
 
 resource "aws_security_group" "sg" {
- ingress {
-   from_port   = var.ingress_port
-   to_port     = var.ingress_port
-   protocol    = var.ingress_protocol
-   cidr_blocks = var.cidr_blocks
- }
+ dynamic "ingress" {
+    for_each = var.ingress_rules
+    content {
+      from_port   = ingress.value.from_port
+      to_port     = ingress.value.to_port
+      protocol    = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
+    }
+  }
 
  
  egress {
@@ -60,7 +61,7 @@ variable "ami_id" {
 }
 
 variable "instance_type" {
-  
+
 }
 
 variable "machine-name" {
@@ -82,13 +83,6 @@ resource "aws_instance" "vm" {
 }
 
 
-output "vm_public_ip" {
- value       = aws_instance.vm.public_ip
- description = "Public IP address of the VM"
- depends_on = [ null_resource.check_public_ip ]
-}
-
-
 resource "null_resource" "check_public_ip" {
  provisioner "local-exec" {
    command = <<EOT
@@ -103,4 +97,22 @@ resource "null_resource" "check_public_ip" {
 
 
  depends_on = [aws_instance.vm]
+}
+
+output "ingress_rules" {
+  value = var.ingress_rules
+}
+
+output "the_region" {
+  value = var.region
+}
+
+output "the_ami_id" {
+ value = var.ami_id
+}
+
+output "the_vm_public_ip" {
+ value       = aws_instance.vm.public_ip
+ description = "Public IP address of the VM"
+ depends_on = [ null_resource.check_public_ip ]
 }
