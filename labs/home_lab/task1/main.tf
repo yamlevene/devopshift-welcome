@@ -19,5 +19,5 @@ output "private_subnet_id" {
 }
 
 output "security_group_id" {
-  value = module.vpc.security_group_id
+  value = module.vpc.ec2_security_group_id
 }

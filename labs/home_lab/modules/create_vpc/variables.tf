@@ -24,13 +24,13 @@ variable "private_subnet_name" {
 }
 
 variable "public_subnet_az" {
-  type    = string
-  default = "us-east-1a"
+  type    = list(string)
+  default = ["us-east-1a", "us-east-1b"]
 }
 
 variable "private_subnet_az" {
-  type    = string
-  default = "us-east-1b"
+  type    = list(string)
+  default = ["us-east-1a", "us-east-1b"]
 }
 
 variable "public_rt_name" {
