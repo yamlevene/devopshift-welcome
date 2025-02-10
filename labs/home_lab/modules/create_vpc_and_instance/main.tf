@@ -5,7 +5,7 @@ module "vpc" {
   subnet_count = var.subnet_count
 }
 
-# create EC2 instance (public subnet)
+# create EC2 instance in the custom VPC
 resource "aws_instance" "my_ec2" {
   ami           = var.ami_id
   instance_type = var.instance_type

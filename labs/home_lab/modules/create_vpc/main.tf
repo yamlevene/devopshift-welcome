@@ -1,4 +1,5 @@
-# Create a VPC
+
+# create a VPC
 resource "aws_vpc" "my_vpc" {
   cidr_block = var.vpc_cidr
   enable_dns_support = true
@@ -9,7 +10,7 @@ resource "aws_vpc" "my_vpc" {
   }
 }
 
-# Create public subnets dynamically
+# create public subnets dynamically
 resource "aws_subnet" "public_subnet" {
   count = var.subnet_count
 
@@ -24,7 +25,7 @@ resource "aws_subnet" "public_subnet" {
   }
 }
 
-# Create private subnets dynamically
+# create private subnets dynamically
 resource "aws_subnet" "private_subnet" {
   count = var.subnet_count
 
@@ -38,7 +39,7 @@ resource "aws_subnet" "private_subnet" {
   }
 }
 
-# Create an Internet Gateway
+# create Internet Gateway
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.my_vpc.id
 
@@ -47,7 +48,7 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
-# Create a public route table
+# create public route table
 resource "aws_route_table" "public_rt" {
   vpc_id = aws_vpc.my_vpc.id
 
@@ -56,14 +57,14 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
-# Route to the internet via IGW
+# route to the internet via IGW
 resource "aws_route" "public_internet_access" {
   route_table_id         = aws_route_table.public_rt.id
   destination_cidr_block = var.igw_cidr_block
   gateway_id             = aws_internet_gateway.igw.id
 }
 
-# Associate public subnets with public route table
+# add public route table to public subnets
 resource "aws_route_table_association" "public_assoc" {
   count = var.subnet_count
 
@@ -71,7 +72,7 @@ resource "aws_route_table_association" "public_assoc" {
   route_table_id = aws_route_table.public_rt.id
 }
 
-# Create a private route table
+# create private route table
 resource "aws_route_table" "private_rt" {
   vpc_id = aws_vpc.my_vpc.id
 
@@ -80,7 +81,7 @@ resource "aws_route_table" "private_rt" {
   }
 }
 
-# Associate private subnets with private route table
+# add private route table to private subnets 
 resource "aws_route_table_association" "private_assoc" {
   count = var.subnet_count
 
@@ -88,7 +89,7 @@ resource "aws_route_table_association" "private_assoc" {
   route_table_id = aws_route_table.private_rt.id
 }
 
-# Create a Security Group
+# create security group
 resource "aws_security_group" "ec2_sg" {
   name   = "yam-sg"
   vpc_id = aws_vpc.my_vpc.id
