@@ -1,7 +1,7 @@
 import os
 import sys
 import logging
-from LogFormatters import JsonFormatter, TextFormatter
+from LogFormmaters import JsonFormatter, TextFormatter
 
 
 # define list of servers
@@ -14,12 +14,19 @@ LOG_FORMAT = os.environ.get("LOG_FORMAT", "TEXT")
 # build my own logger with custom settings
 logger = logging.getLogger("check_server_logger")
 logger.setLevel(LOG_LEVEL)
-handler = logging.StreamHandler(sys.stdout)
+
+stdout_handler = logging.StreamHandler(sys.stdout)
+file_handler = logging.FileHandler("check_input_servers_log.txt")
+
 if LOG_FORMAT == "TEXT":
-    handler.setFormatter(TextFormatter())
+    formatter = TextFormatter()
 else:
-    handler.setFormatter(JsonFormatter())
-logger.addHandler(handler)
+    formatter = JsonFormatter()
+stdout_handler.setFormatter(formatter)
+file_handler.setFormatter(formatter)
+
+logger.addHandler(stdout_handler)
+logger.addHandler(file_handler)
 
 
 def check_server():
