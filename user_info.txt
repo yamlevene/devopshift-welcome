@@ -1,0 +1,3 @@
+GITBRANCH=workshop/python
+GITURL=github.com/yamlevene/devopshift-welcome.git
+GITUSERNAME=yamlevene
