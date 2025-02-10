@@ -13,10 +13,10 @@ variable "instance_name" {
   default = "yam-ec2-machine"
 }
 
-variable "vpc_cidr" {
-  type    = string
-  default = "10.0.0.0/16"
-}
+# variable "vpc_cidr" {
+#   type    = string
+#   default = "10.0.0.0/16"
+# }
 
 variable "instance_type" {
   type    = string
@@ -26,9 +26,4 @@ variable "instance_type" {
 variable "assign_public_ip" {
   type    = string
   default = true
-}
-
-variable "subnet_count" {
-  type = number
-  default = 1
 }
