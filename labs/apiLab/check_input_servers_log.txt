@@ -1,0 +1,6 @@
+My custom text msg: running
+My custom text msg: server3 is not a registered server
+My custom text msg: server name can't be empty
+My custom text msg: server name can't be empty
+My custom text msg: server name can't be empty
+My custom text msg: not running
