@@ -1,7 +1,7 @@
 import os
 import sys
 import logging
-from LogFormatter import JsonFormatter, TextFormatter
+from LogFormmaters import JsonFormatter, TextFormatter
 
 # get env variables of log level and format settings
 LOG_LEVEL = os.environ.get("LOG_LEVEL", "DEBUG")

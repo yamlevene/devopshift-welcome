@@ -1,20 +1,23 @@
-from dataclasses import dataclass
+from typing import Union
+import json
+from pydantic import BaseModel, ValidationError
 
-@dataclass
-class ServerResponse:
+
+class ServerResponse(BaseModel):
     server_name: str
-    status: bool | str
+    status: Union[str, bool]
 
-@dataclass
-class Server:
+
+class Server(BaseModel):
     name: str
     online: bool
     cpus: int
     ram: int
 
-def read_server_list(file_name) -> list[Server]:
+
+def read_server_list(file_name):    # -> list[Server]
     with open(file_name, "r") as f:
-        servers: list[Server] = []
+        servers = []    # : list[Server]
         for line in f.readlines():
             if line.strip():
                 json_object = json.loads(line)
@@ -25,6 +28,7 @@ def read_server_list(file_name) -> list[Server]:
                 else:
                     servers.append(new_server)
     return servers
+
 
 def add_new_server(servers_path: str, new_server: Server):
     with open(servers_path, "a") as f:
