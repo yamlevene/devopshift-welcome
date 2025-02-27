@@ -2,7 +2,8 @@ pipeline {
     agent any
     stages {
         stage('Parallel Tests') {
-            parallel {
+            parallel failFast: true, // failFast added
+            {
                 stage('Test on Chrome') {
                     steps {
                         echo 'Testing VOLT on Chrome...'
