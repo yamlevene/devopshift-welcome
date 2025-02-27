@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Deploy') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: '729e39df-1fe8-48ec-a71e-015913cd88b9', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    echo "Deploying with username ${env.USERNAME}"
+                    // Use the credentials in your deployment steps
+                    sh 'echo $USERNAME'
+                    sh 'echo $PASSWORD'
+                }
+            }
+        }
+    }
+}
