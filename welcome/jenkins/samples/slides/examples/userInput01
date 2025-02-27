@@ -33,6 +33,21 @@ pipeline {
             }
         }
 
+        stage('Archive Artifacts') {
+            when {
+                expression { env.USER_CHOICE == 'Proceed' }
+            }
+            steps {
+                script {
+                    // Create a sample file
+                    writeFile file: 'sample.txt', text: 'This is a sample file for archiving.'
+
+                    // Archive the file
+                    archiveArtifacts artifacts: 'sample.txt', fingerprint: true
+                }
+            }
+        }
+
         stage('Abort the Pipeline') {
             // Run this stage ONLY! if the user chooses 'Abort'
             when {
