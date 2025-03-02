@@ -1,0 +1,51 @@
+node {
+    def runStage = { stageName, command ->
+        stage(stageName) {
+            echo "Starting stage: ${stageName}"
+            sh command
+        }
+    }
+
+    // cloning mock
+    stage('Clone') {
+        runStage('Clone', 'echo "Cloning repository..."')
+    }
+
+    // build mock
+    stage('Build') {
+        runStage('Build', 'echo "Building Python project..."')
+    }
+
+    // parallel tasks mock
+    stage('Parallel Tasks') {
+        parallel (
+            'Lint': {
+                runStage('Lint', 'echo "Running Python linting..."')
+            },
+            'Security Test': {
+                runStage('Security Test', 'echo "Running security tests..."')
+            }
+        )
+    }
+
+    // optional deploy mock
+    stage('Deploy to Production?') {
+        def userInput = input(
+            id: 'UserInput',
+            message: 'Deploy to production?',
+            parameters: [
+                [$class: 'BooleanParameterDefinition', defaultValue: false, description: 'Deploy?', name: 'Proceed']
+            ]
+        )
+        if (userInput) {
+            runStage('Deploy', 'echo "Deploying to production..."')
+        } else {
+            echo "Skipping deployment."
+        }
+    }
+
+    // cleanup mock
+    stage('Cleanup') {
+        runStage('Cleanup', 'echo "Cleaning up workspace..."')
+    }
+}
