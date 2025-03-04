@@ -6,7 +6,7 @@ pipeline {
        }
    }
    environment {
-       DOCKERHUB_CREDENTIALS = credentials('docker-hub-creds')
+       DOCKERHUB_CREDENTIALS = credentials('b57a836a-5c75-4924-b552-14e523ca4201')
        DOCKER_REGISTRY = 'yamlevene'
        REPO_NAME = 'fe-exam'
        IMAGE_TAG = "${env.BUILD_NUMBER}"
