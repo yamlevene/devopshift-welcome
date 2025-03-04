@@ -10,8 +10,6 @@ pipeline {
        DOCKER_REGISTRY = 'yamlevene'
        REPO_NAME = 'fe-exam'
        IMAGE_TAG = "${env.BUILD_NUMBER}"
-       DOCKERHUB_CREDENTIALS_USR = 'user1'
-       DOCKERHUB_CREDENTIALS_PSW = 'user1'
    }
    stages {
         stage('Setup Docker') {
