@@ -25,7 +25,7 @@ pipeline {
                     steps {
                         script {
                             sh 'pip install --user flake8 || echo "Flake8 is already installed"'
-                            sh 'flake8 /exam-code/docker/be/src/mainbe.py'
+                            sh 'flake8 exam-code/docker/be/src/mainbe.py'
                         }
                     }
                 }
@@ -34,7 +34,7 @@ pipeline {
                     steps {
                         script {
                             sh 'pip install --user bandit || echo "Bandit is already installed"'
-                            sh 'bandit -r /exam-code/docker/fe/src/'
+                            sh 'bandit -r exam-code/docker/fe/src/'
                         }
                     }
                 }
