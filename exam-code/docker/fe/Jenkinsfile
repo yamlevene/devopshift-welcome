@@ -61,12 +61,13 @@ pipeline {
         }
         stage('Integration Test with Docker Compose') {
             steps {
-                sh 'docker-compose up -d'
+                sh 'docker-compose -f exam-code/docker/docker-compose.yaml up -d'
                 sh 'sleep 10'
-                sh 'curl -f http://localhost:5002 || exit 1'  // Adjust for backend if needed
-                sh 'docker-compose down'
+                sh 'curl -f http://localhost:5002 || exit 1'
+                sh 'docker-compose -f exam-code/docker/docker-compose.yaml down'
             }
         }
+
         stage('Push to Docker Hub') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
