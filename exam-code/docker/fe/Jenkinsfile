@@ -64,6 +64,7 @@ pipeline {
                 sh 'docker-compose -f exam-code/docker/docker-compose.yaml up -d'
                 sh 'sleep 10'
                 sh 'curl -f http://localhost:5002 || true'
+                sh 'docker ps | grep -q 5002 && echo "Port 5002 is mapped and the container is running." || true'
                 sh 'docker-compose -f exam-code/docker/docker-compose.yaml down'
             }
         }
